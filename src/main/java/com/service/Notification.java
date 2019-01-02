@@ -1,0 +1,12 @@
+package com.service;
+
+import com.event.Event;
+import com.event.EventType;
+
+public interface Notification {
+
+	void register(Notifiable type, EventType... evt);
+
+	void publish(Event evt);
+
+}

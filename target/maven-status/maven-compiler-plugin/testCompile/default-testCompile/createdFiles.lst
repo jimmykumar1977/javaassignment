@@ -1,0 +1,3 @@
+com\service\impl\DbOperationTest.class
+com\event\EventTestCase.class
+com\service\impl\NotificationTest.class
