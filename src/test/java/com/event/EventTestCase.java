@@ -11,7 +11,7 @@ public class EventTestCase {
 	
 	@BeforeEach
 	public void init() {
-		e = Event.of(EventType.STATUS, null, "111", "222");
+		e = Event.of(EventType.ADD, null, "111", "222");
 	}
 	
 	@Test

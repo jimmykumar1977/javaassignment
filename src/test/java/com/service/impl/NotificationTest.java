@@ -1,12 +1,11 @@
 package com.service.impl;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import com.event.Event;
 import com.event.EventType;
@@ -27,9 +26,9 @@ public class NotificationTest {
 	public void testEventValues() {
 		
 		JNotifiable j = mock(JNotifiable.class); 
-		ns.register(j, EventType.QTY);
+		ns.register(j, EventType.ADD,EventType.DELETE,EventType.GET,EventType.UPDATE);
 		
-		Event e = Event.of(EventType.STATUS, null, "111", "222");
+		Event e = Event.of(EventType.ADD, null, "111", "222");
 		ns.publish(e);
 		verify(j,times(1));
 	}

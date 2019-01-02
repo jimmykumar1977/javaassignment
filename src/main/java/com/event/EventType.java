@@ -2,5 +2,5 @@ package com.event;
 
 public enum EventType {
 
-	STATUS,QTY;
+	ADD,UPDATE,DELETE,GET;
 }
