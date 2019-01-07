@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.event.AddEvent;
 import com.event.Event;
 import com.event.EventType;
 import com.event.client.JNotifiable;
@@ -19,17 +20,17 @@ public class NotificationTest {
 
 	@BeforeEach
 	public void init() {
-		ns = new NotificationServiceImpl();
+		ns = new NotificationServiceV2();
 	}
 
 	@Test
 	public void testEventValues() {
 		
 		JNotifiable j = mock(JNotifiable.class); 
-		ns.register(j, EventType.ADD,EventType.DELETE,EventType.GET,EventType.UPDATE);
+		ns.register(j, AddEvent.class);
 		
-		Event e = Event.of(EventType.ADD, null, "111", "222");
-		ns.publish(e);
+		Event ae = new AddEvent(EventType.ADD,null);
+		ns.publish(ae);
 		verify(j,times(1));
 	}
 }

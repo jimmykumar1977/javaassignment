@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.model.Order;
 import com.service.Operations;
+import com.util.ClassUtils;
 
 public class DBOperations implements Operations {
 
@@ -26,7 +27,9 @@ public class DBOperations implements Operations {
 		Optional<Order> ord = db.stream().filter(oo -> oo.getOrderId() == id).findFirst();
 		if (ord.isPresent()) {
 			Order d = ord.get();
-			d = o;
+			d.setOrderDate(o.getOrderDate());
+			d.setOrderStatus(o.getOrderStatus());
+			d.setRegionId(o.getRegionId());
 		}
 	}
 
@@ -44,7 +47,7 @@ public class DBOperations implements Operations {
 		Optional<Order> ord = db.stream().filter(oo -> oo.getOrderId() == id).findFirst();
 		if (ord.isPresent()) {
 			Order d = ord.get();
-			return d;
+			return ClassUtils.clone(d);
 		}
 		return null;
 	}

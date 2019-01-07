@@ -5,7 +5,7 @@ import com.event.EventType;
 
 public interface Notification {
 
-	void register(Notifiable type, EventType... evt);
+	void register(Notifiable type, Class... evt);
 
 	void publish(Event evt);
 

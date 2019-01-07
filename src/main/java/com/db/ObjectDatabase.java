@@ -1,10 +1,13 @@
 package com.db;
 
+import java.util.List;
+
 import com.event.Event;
 import com.event.EventType;
 import com.model.Order;
 import com.service.Notification;
 import com.service.Operations;
+import com.util.ClassUtils;
 
 public class ObjectDatabase implements Operations {
 
@@ -21,23 +24,26 @@ public class ObjectDatabase implements Operations {
 	@Override
 	public synchronized void add(Order o) {
 		_ops.add(o);
-		Event e = Event.of(EventType.ADD, o, null, null);
+		Event e = Event.addEvent(o);
 		_n.publish(e);
-
+		
 	}
 
 	@Override
 	public synchronized void update(int id, Order o) {
+		Order og = _ops.get(id);
 		_ops.update(id, o);
-		Event e = Event.of(EventType.UPDATE, o, null, null);
-		_n.publish(e);
+		List<Event> ets = ClassUtils.valuesChange(og, o);
+		for(Event evt: ets) {
+		_n.publish(evt);	 
+		}
 	}
 
 	@Override
 	public synchronized void delete(int id) {
 		Order o = _ops.get(id);
 		_ops.delete(id);
-		Event e = Event.of(EventType.DELETE, o, null, null);
+		Event e = Event.deleteEvent(o);
 		_n.publish(e);
 
 	}
@@ -45,7 +51,7 @@ public class ObjectDatabase implements Operations {
 	@Override
 	public Order get(int id) {
 		Order o = _ops.get(id);
-		Event e = Event.of(EventType.GET, o, null, null);
+		Event e = Event.getEvent(o);
 		_n.publish(e);
 		return o;
 	}
